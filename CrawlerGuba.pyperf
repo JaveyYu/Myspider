@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>00f223f3-804e-4afa-85ba-45b4f227ce47</TargetProject>
+    <FriendlyName>CrawlerGuba</FriendlyName>
+  </ProjectTarget>
+</ProfilingTarget>
