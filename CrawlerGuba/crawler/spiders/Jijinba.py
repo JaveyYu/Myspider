@@ -8,7 +8,7 @@ import re
 from scrapy.selector import Selector
 import copy
 from crawler.spiders import util
-
+import time
 
 class JijinbaSpider(Spider):
     name = 'Jijinba'
@@ -53,10 +53,10 @@ class JijinbaSpider(Spider):
         else:
                yield item
 
+
     def parse_post_list(self, response):
         item = response.meta['item']
-        hxs = Selector(response)
-        posts = hxs.xpath('//div[@class="articleh"]').extract()
+        posts = response.xpath('//div[@class="articleh"]').extract()
         for post in posts:
             readnum = Selector(text = post).xpath('//span[@class="l1"]/text()').extract()
             if readnum:
@@ -68,18 +68,25 @@ class JijinbaSpider(Spider):
             
             url = Selector(text = post).xpath('//span[@class="l3"]/a/@href').extract()
             if url:
-                item['content']['post_url'] = 'guba.eastmoney.com' + url[0]
-                item['content']['post_id'] = re.search('of(\d+?),',url[0]).group(1)
-                print(item['content']['post_id'])
-
-  
-            #yield Request(url = post_url, meta = {item:copy.deepcopy('item')}, callback = self.parse_post)
-
-    #def parse_post(self, response):
-
-
-
-
+                url = url[0]
+                guba_id = re.split(',',url)[1]
+                if re.search('\d+',guba_id):
+                    post_url = 'guba.eastmoney.com' + url
+                    item['content']['post_id'] = re.split('\.', url)[0]
+                    yield Request(url = post_url, meta = {'item':copy.deepcopy(item)}, callback = self.parse_post)
+    def parse_post(self, response):
+        try:
+            filter_body = response.body.decode('utf-8')
+        except:
+            try:
+                filter_body = response.body.decode('gbk')
+            except:
+                try:
+                    filter_body = response.body.decode('gb2312')
+                except Exception as ex:
+                    print('Decode web page failed:' + response.url)
+        response = response.replace(body = filter_body)
+        content = response.xpath('//div[@class="zwlitext stockcodec"]')
 
 
 

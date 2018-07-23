@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fd93f799-df2f-4612-b341-4d51e9045dea</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>test.py</StartupFile>
+    <StartupFile>runspider.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,28 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="test.py" />
+    <Compile Include="crawler\items.py" />
+    <Compile Include="crawler\middlewares.py" />
+    <Compile Include="crawler\pipelines.py" />
+    <Compile Include="crawler\settings.py" />
+    <Compile Include="crawler\spiders\test.py" />
+    <Compile Include="crawler\spiders\util.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="crawler\spiders\__init__.py" />
+    <Compile Include="crawler\__init__.py" />
+    <Compile Include="runspider.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="crawler\" />
+    <Folder Include="crawler\spiders\" />
+    <Folder Include="crawler\spiders\__pycache__\" />
+    <Folder Include="crawler\__pycache__\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="crawler\spiders\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="crawler\__pycache__\settings.cpython-37.pyc" />
+    <Content Include="crawler\__pycache__\__init__.cpython-37.pyc" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
