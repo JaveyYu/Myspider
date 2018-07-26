@@ -129,6 +129,6 @@ class JijinbaSpider(Spider):
         replists = response.xpath('//div[@class="zwli clearfix"]')
         for reply in replists:
             reply_author = reply.xpath('//span[@class="zwnick"]//span').extract()
-
+#7.26
 
 
