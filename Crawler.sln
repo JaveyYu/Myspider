@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerGuba", "CrawlerGuba\CrawlerGuba.pyproj", "{00F223F3-804E-4AFA-85BA-45B4F227CE47}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Test", "Test\Test.pyproj", "{89A1917D-D587-4228-A17B-4B1031985DF2}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "test", "test\test.pyproj", "{FD93F799-DF2F-4612-B341-4D51E9045DEA}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerGuba", "CrawlerGuba\CrawlerGuba.pyproj", "{00F223F3-804E-4AFA-85BA-45B4F227CE47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89A1917D-D587-4228-A17B-4B1031985DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89A1917D-D587-4228-A17B-4B1031985DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00F223F3-804E-4AFA-85BA-45B4F227CE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00F223F3-804E-4AFA-85BA-45B4F227CE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD93F799-DF2F-4612-B341-4D51E9045DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD93F799-DF2F-4612-B341-4D51E9045DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

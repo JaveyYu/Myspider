@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>fd93f799-df2f-4612-b341-4d51e9045dea</ProjectGuid>
+    <ProjectGuid>89a1917d-d587-4228-a17b-4b1031985df2</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>runspider.py</StartupFile>
+    <StartupFile>Test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>test</Name>
-    <RootNamespace>test</RootNamespace>
+    <Name>Test</Name>
+    <RootNamespace>Test</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,13 +25,13 @@
     <Compile Include="crawler\middlewares.py" />
     <Compile Include="crawler\pipelines.py" />
     <Compile Include="crawler\settings.py" />
-    <Compile Include="crawler\spiders\test.py" />
+    <Compile Include="crawler\spiders\TestSpider.py" />
     <Compile Include="crawler\spiders\util.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="crawler\spiders\__init__.py" />
     <Compile Include="crawler\__init__.py" />
-    <Compile Include="runspider.py" />
+    <Compile Include="Test.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="crawler\" />
@@ -43,6 +43,7 @@
     <Content Include="crawler\spiders\__pycache__\__init__.cpython-37.pyc" />
     <Content Include="crawler\__pycache__\settings.cpython-37.pyc" />
     <Content Include="crawler\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="scrapy.cfg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

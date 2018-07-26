@@ -62,7 +62,7 @@ class JijinbaSpider(Spider):
             readnum = Selector(text = post).xpath('//span[@class="l1"]/text()').extract()
             if readnum:
                 readnum = readnum[0]
-                item['content']['readnum'] = readnum[0]
+                item['content']['readnum'] = readnum
             
             replynum = Selector(text = post).xpath('//span[@class="l2"]/text()').extract()
             if replynum:
@@ -89,6 +89,7 @@ class JijinbaSpider(Spider):
         #            filter_body = response.body.decode('gb2312')
         #        except Exception as ex:
         #            print('Decode web page failed:' + response.url)
+        #filter_body = re.sub('<[A-Z]+[0-9]*[^>]*>|</[A-Z]+[^>]*>', '', filter_body)
         #response.replace(body = filter_body)
 
         item = response.meta['item']
@@ -99,22 +100,22 @@ class JijinbaSpider(Spider):
         create_time = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
         item['content']['create_time'] = create_time
 
-        author_url = response.xpath('//div[@id="zwconttb"]//a/@href').extract()[0]
-        item['content']['author_url'] = author_url
+        author_url = response.xpath('//div[@id="zwconttb"]//a/@href')
+        if author_url:
+            item['content']['author_url'] = author_url.extract()[0]
 
         postcontent = response.xpath('//div[@class="stockcodec"]/text()').extract()
-        psotcontent = postcontent[0].strip()
-        item['content']['content'] = content
+        #postcontent = response.xpath('//div[@class="stockcodec"]')
+        item['content']['content'] = postcontent[0].strip()
         
         posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
-        posttitle = posttitle[0].strip()
-        item['content']['title'] = posttitle
+        item['content']['title'] = posttitle[0].strip()
 
-        if replynum:
-            if rptotal % 30:
-                rptotal = replynum // 30 +1
+        if int(replynum):
+            if int(replynum) % 30:
+                rptotal = int(replynum) // 30 +1
             else:
-                rptotal = replynum //30
+                rptotal = int(replynum) //30
             head = re.search('(.+?)\.html', response.url).group(1)
             for i in range(1,rptotal + 1):
                 reply_url = head + "_" + str(i) + ".html"
@@ -127,7 +128,7 @@ class JijinbaSpider(Spider):
         
         replists = response.xpath('//div[@class="zwli clearfix"]')
         for reply in replists:
-            reply_author = reply.xpath('//span[@class="zwnick"]//span/text').extract()
+            reply_author = reply.xpath('//span[@class="zwnick"]//span').extract()
 
 
 

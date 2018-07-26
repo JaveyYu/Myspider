@@ -7,13 +7,9 @@
 
 from scrapy.item import Item, Field
 
-
-class CrawlerItem(Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
-class JijinbaItem(Item):
+class TestItem(Item):
     url = Field()
     fp = Field()
     content = Field()
+
+

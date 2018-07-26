@@ -9,12 +9,12 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'test'
+BOT_NAME = 'CrawlerTest'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
 
-LOG_FILE_JIJINBA = 'log-Jijinba.log'
+LOG_FILE_TESTSPIDER = 'log-TestSpider.log'
 LOG_FILE_PIPELINE = 'log-Pipeline.log'
 
 LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
