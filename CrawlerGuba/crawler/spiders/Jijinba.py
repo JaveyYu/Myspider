@@ -72,13 +72,14 @@ class JijinbaSpider(Spider):
                 item['content']['replynum'] = replynum
             
             url = Selector(text = post).xpath('//span[@class="l3"]/a/@href').extract()
+            posttype = Selector(text = post).xpath('//span[@class="l3"]//em[@class="hinfo"]/text()').extract()
             if url:
                 url = url[0]
                 guba_id = re.search('of(\d+?)_',response.url).group(1)
                 if guba_id in url:
                     post_url = 'http://guba.eastmoney.com' + url
                     item['content']['post_id'] = re.split('\.', url)[0]
-                    yield Request(url = post_url, meta = {'item':copy.deepcopy(item),'replynum':replynum}, callback = self.parse_post)
+                    yield Request(url = post_url, meta = {'item':copy.deepcopy(item),'replynum':replynum,'posttype':posttype}, callback = self.parse_post)
     
     def parse_post(self, response):
         #try:
@@ -97,6 +98,7 @@ class JijinbaSpider(Spider):
         if response.status == 200:
             item = response.meta['item']
             replynum = response.meta['replynum']
+            posttype = response.meta['posttype']
 
             dt = response.xpath('//div[@class="zwfbtime"]/text()').extract()
             dt = re.search('\d{4}-.*:\d{2}', dt[0]).group()
@@ -107,12 +109,25 @@ class JijinbaSpider(Spider):
             if author_url:
                 item['content']['author_url'] = author_url.extract()[0]
 
-            postcontent = response.xpath('//div[@class="stockcodec"]/text()').extract()
-            #postcontent = response.xpath('//div[@class="stockcodec"]')
-            item['content']['content'] = postcontent[0].strip()
+            if posttype:#针对公告的帖子
+                try:
+                     postcontent =response.xpath('//span[@class="zwtitlepdf"]//a/@href').extract()[0]
+                     item['content']['content'] = postcontent
+                except:
+                    try:
+                        postcontent =response.xpath('//p[@style="line-height: 164.28%;"]//a/@href').extract()[0]
+                        item['content']['content'] = postcontent
+                    except Exception as ex:
+                        print("The announcement can't be crawled:" + response.url)
+
+                posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
+                item['content']['title'] = posttitle[0].strip() + "[Announcement]"
+            else:#针对普通的帖子
+                postcontent = response.xpath('//div[@class="stockcodec"]/text()').extract()
+                item['content']['content'] = postcontent[0].strip()
         
-            posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
-            item['content']['title'] = posttitle[0].strip()
+                posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
+                item['content']['title'] = posttitle[0].strip()
 
             item['content']['reply'] = []
             if int(replynum):
