@@ -40,20 +40,22 @@ class JijinbaSpider(Spider):
         pager = response.xpath('//div[@class="pager"]').extract()[0]
         postnums = re.search("_\|(\d+)\|",pager).group(1)
         item['content']['postnums'] = int(postnums)
-        heads = re.search("of(.*?)\|",pager).group(1)
+        try:
+            heads = re.search("of(.*?)\|", pager).group(1)
+            if item['content']['postnums'] % 80:
+                page_total = item['content']['postnums'] // 80 + 1
+            else:
+                page_total = item['content']['postnums'] // 80
 
-        if item['content']['postnums'] % 80:
-            page_total = item['content']['postnums'] // 80 + 1
-        else:
-            page_total = item['content']['postnums'] // 80
-
-        if page_total:
-            for i in range(1,page_total + 1):
-                page_url = "http://guba.eastmoney.com/list,of"+heads+str(i)+".html"
-                yield Request(url = page_url, meta = {'item':item }, callback = self.parse_post_list)
-        else:
-               yield item
-
+            if page_total:
+                for i in range(1,page_total + 1):
+                    page_url = "http://guba.eastmoney.com/list,of"+heads+str(i)+".html"
+                    yield Request(url = page_url, meta = {'item':item }, callback = self.parse_post_list)
+            else:
+                   yield item
+        except:
+            yield Request(url = response.url, meta = {'item':item }, callback = self.parse_post_list)
+                    
 
     def parse_post_list(self, response):
         item = response.meta['item']
@@ -89,46 +91,85 @@ class JijinbaSpider(Spider):
         #            filter_body = response.body.decode('gb2312')
         #        except Exception as ex:
         #            print('Decode web page failed:' + response.url)
+        #filter_body = response.body.decode(response.encoding)
         #filter_body = re.sub('<[A-Z]+[0-9]*[^>]*>|</[A-Z]+[^>]*>', '', filter_body)
         #response.replace(body = filter_body)
+        if response.status == 200:
+            item = response.meta['item']
+            replynum = response.meta['replynum']
 
-        item = response.meta['item']
-        replynum = response.meta['replynum']
+            dt = response.xpath('//div[@class="zwfbtime"]/text()').extract()
+            dt = re.search('\d{4}-.*:\d{2}', dt[0]).group()
+            create_time = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
+            item['content']['create_time'] = create_time
 
-        dt = response.xpath('//div[@class="zwfbtime"]/text()').extract()
-        dt = re.search('\d{4}-.+\d{2}', dt[0]).group()
-        create_time = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
-        item['content']['create_time'] = create_time
+            author_url = response.xpath('//div[@id="zwconttb"]//a/@href')
+            if author_url:
+                item['content']['author_url'] = author_url.extract()[0]
 
-        author_url = response.xpath('//div[@id="zwconttb"]//a/@href')
-        if author_url:
-            item['content']['author_url'] = author_url.extract()[0]
-
-        postcontent = response.xpath('//div[@class="stockcodec"]/text()').extract()
-        #postcontent = response.xpath('//div[@class="stockcodec"]')
-        item['content']['content'] = postcontent[0].strip()
+            postcontent = response.xpath('//div[@class="stockcodec"]/text()').extract()
+            #postcontent = response.xpath('//div[@class="stockcodec"]')
+            item['content']['content'] = postcontent[0].strip()
         
-        posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
-        item['content']['title'] = posttitle[0].strip()
+            posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
+            item['content']['title'] = posttitle[0].strip()
 
-        if int(replynum):
-            if int(replynum) % 30:
-                rptotal = int(replynum) // 30 +1
+            item['content']['reply'] = []
+            if int(replynum):
+                if int(replynum) % 30:
+                    rptotal = int(replynum) // 30 +1
+                else:
+                    rptotal = int(replynum) //30
+                head = re.search('(.+?)\.html', response.url).group(1)
+                for i in range(1,rptotal + 1):
+                    reply_url = head + "_" + str(i) + ".html"
+                    yield Request(url = reply_url, meta = {'item': item}, callback = self.parse_reply)
             else:
-                rptotal = int(replynum) //30
-            head = re.search('(.+?)\.html', response.url).group(1)
-            for i in range(1,rptotal + 1):
-                reply_url = head + "_" + str(i) + ".html"
-                yield Request(url = reply_url, meta = {'item', copy.deepcopy(item)}, callback = self.parse_reply)
-        else:
-            yield item
+                yield item
 
     def parse_reply(self, response):
         item = response.meta['item']
         
-        replists = response.xpath('//div[@class="zwli clearfix"]')
-        for reply in replists:
-            reply_author = reply.xpath('//span[@class="zwnick"]//span').extract()
-#7.26
+        replists = response.xpath('//div[@class="zwli clearfix"]').extract()
+        for replist in replists:
+            reply = {} 
+            try:
+                reply_author = Selector(text = replist).xpath('//span[@class="zwnick"]//a/text()').extract()[0]
+                reply['reply_author'] = reply_author
+                reply_authour_url = Selector(text = replist).xpath('//span[@class="zwnick"]//a/@href').extract()[0]
+                reply['reply_author_url'] = reply_authour_url
+            except:
+                try:
+                    reply_author = Selector(text = replist).xpath('//span[@class="gray"]/text()').extract()[0]
+                    reply['reply_author'] = reply_author
+                except Exception as ex:
+                    print("Decode webpage failed:" + response.url)
+                    return
+            
 
+            reply_time = Selector(text = replist).xpath('//div[@class="zwlitime"]/text()').extract()[0]
+            reply_time = re.search('\d{4}-.*:\d{2}', reply_time).group()
+            reply_time = datetime.strptime(reply_time, "%Y-%m-%d %H:%M:%S")
+            reply['reply_time'] = reply_time
+
+
+            reply_content = Selector(text = replist).xpath('//div[@class="zwlitext stockcodec"]/text()').extract()
+            if reply_content:
+                reply['reply_content'] = reply_content[0].strip()
+
+
+            #xpath的@class后面引号内容最后带有一个空格
+            reply_quote_author = Selector(text = replist).xpath('//div[@class="zwlitalkboxtext "]//a/text()').extract()
+            if reply_quote_author:
+                reply['reply_quote_author'] = reply_quote_author[0]
+                
+            reply_quote_author_url = Selector(text = replist).xpath('//div[@class="zwlitalkboxtext "]//a/@href').extract()
+            if reply_quote_author_url:
+                reply['reply_quote_author_url'] = reply_quote_author_url[0]
+
+            reply_quote_content = Selector(text = replist).xpath('//div[@class="zwlitalkboxtext "]//span/text()').extract()
+            if reply_quote_content:
+                reply['reply_quote_content'] = reply_quote_content[0].strip()
+
+            item['content']['reply'].append(reply)
 
