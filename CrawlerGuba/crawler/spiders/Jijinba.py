@@ -65,7 +65,7 @@ class JijinbaSpider(Spider):
         for post in posts:
             readnum = Selector(text = post).xpath('//span[@class="l1"]/text()').extract()
             if readnum:
-                readnum = readnum[0]
+                readnum = int(readnum[0])
                 item['content']['readnum'] = readnum
             
             replynum = Selector(text = post).xpath('//span[@class="l2"]/text()').extract()
@@ -78,7 +78,7 @@ class JijinbaSpider(Spider):
             if url:
                 url = url[0]
                 guba_id = re.search('of(\d+?)_',response.url).group(1)
-                if guba_id in url:
+                if guba_id in url and re.search('^\/', url):
                     post_url = 'http://guba.eastmoney.com' + url
                     item['content']['post_id'] = re.split('\.', url)[0]
                     yield Request(url = post_url, meta = {'item':copy.deepcopy(item),'replynum':replynum,'posttype':posttype}, callback = self.parse_post)
@@ -138,16 +138,10 @@ class JijinbaSpider(Spider):
                 if int(replynum) % 30:
                     rptotal = int(replynum) // 30 +1
                 else:
-                    rptotal = int(replynum) //30
+                    rptotal = int(replynum) // 30
                 head = re.search('(.+?)\.html', response.url).group(1)
-                for i in range(1,rptotal + 1):
-                    if i <rptotal:
-                        reply_url = head + "_" + str(i) + ".html"
-                        yield Request(url = reply_url, meta = {'item': item}, callback = self.parse_reply)
-                    else:
-                        reply_url = head + "_" + str(i) + ".html"
-                        yield Request(url = reply_url, meta = {'item': item}, callback = self.parse_reply)
-                        yield item
+                reply_url = head + "_" + str(1) + ".html"
+                yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':1, 'rptotal':rptotal}, callback = self.parse_reply)
             else:
                 yield item
         except Exception as ex:
@@ -155,6 +149,9 @@ class JijinbaSpider(Spider):
 
     def parse_reply(self, response):
         item = response.meta['item']
+        rptotal = response.meta['rptotal']
+        head = response.meta['head']
+        page = response.meta['page']
         
         replists = response.xpath('//div[@class="zwli clearfix"]').extract()
         for replist in replists:
@@ -199,4 +196,10 @@ class JijinbaSpider(Spider):
 
             item['content']['reply'].append(reply)
 
+        if page < rptotal:
+            reply_url = head + "_" + str(page + 1) + ".html"
+            yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':page + 1, 'rptotal':rptotal}, callback = self.parse_reply)
+        else:
+            yield item
+                       
 
