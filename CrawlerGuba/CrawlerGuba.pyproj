@@ -3,7 +3,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>00f223f3-804e-4afa-85ba-45b4f227ce47</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
+    <ProjectHome>
+    </ProjectHome>
     <StartupFile>runspider.py</StartupFile>
     <SearchPath>
     </SearchPath>
@@ -21,13 +22,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="crawler\middleware.py" />
     <Compile Include="crawler\spiders\Jijinba.py" />
     <Compile Include="crawler\spiders\util.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="runspider.py" />
     <Compile Include="crawler\items.py" />
-    <Compile Include="crawler\middlewares.py" />
     <Compile Include="crawler\pipelines.py" />
     <Compile Include="crawler\settings.py" />
     <Compile Include="crawler\spiders\__init__.py" />

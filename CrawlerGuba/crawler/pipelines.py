@@ -10,9 +10,9 @@ from crawler.settings import *
 import json
 import logging
 
-class CrawlerPipeline(object):
-    def process_item(self, item, spider):
-        pass
+#class CrawlerPipeline(object):
+#    def process_item(self, item, spider):
+#        pass
 
 
 class MongoPipeline(object):

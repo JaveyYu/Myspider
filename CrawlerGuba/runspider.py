@@ -7,6 +7,6 @@ process = CrawlerProcess(get_project_settings())
 #spider_name = 'CrawlerGubaExFund'
 #spider_name = 'CrawlerGubaUserInfo'
 #spider_name = 'CrawlerGubaReplyUserInfo'
-spider_name = 'Jijinba'
+spider_name = 'CrawlerJijinba'
 process.crawl(spider_name)
 process.start()

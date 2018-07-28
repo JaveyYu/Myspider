@@ -4,15 +4,17 @@ from scrapy.spiders import Spider
 from crawler.items import JijinbaItem
 from crawler.settings import *
 from scrapy import Request
-import re
 from scrapy.selector import Selector
-import copy
 from crawler.spiders import util
-import time
 from datetime import datetime,timedelta
+import re
+import time
+import copy
+import pymongo
+import json
 
 class JijinbaSpider(Spider):
-    name = 'Jijinba'
+    name = 'CrawlerJijinba'
      #logger = util.set_logger(name, LOG_FILE_JIJINBA)
     #handle_httpstatus_list = [404]
      #website_possible_httpstatus_list = [404]
@@ -82,20 +84,21 @@ class JijinbaSpider(Spider):
                     yield Request(url = post_url, meta = {'item':copy.deepcopy(item),'replynum':replynum,'posttype':posttype}, callback = self.parse_post)
     
     def parse_post(self, response):
-        #try:
-        #    filter_body = response.body.decode('utf-8')
-        #except:
-        #    try:
-        #        filter_body = response.body.decode('gbk')
-        #    except:
-        #        try:
-        #            filter_body = response.body.decode('gb2312')
-        #        except Exception as ex:
-        #            print('Decode web page failed:' + response.url)
-        #filter_body = response.body.decode(response.encoding)
-        #filter_body = re.sub('<[A-Z]+[0-9]*[^>]*>|</[A-Z]+[^>]*>', '', filter_body)
-        #response.replace(body = filter_body)
-        if response.status == 200:
+        try:
+            if response.status == 200:
+                try:
+                    filter_body = response.body.decode('utf-8')
+                except:
+                    try:
+                        filter_body = response.body.decode('gbk')
+                    except:
+                        try:
+                            filter_body = response.body.decode('gb2312')
+                        except Exception as ex:
+                            print('Decode web page failed:' + response.url)
+            filter_body = re.sub('<[A-Z]+[0-9]*[^>]*>|</[A-Z]+[^>]*>', '', filter_body)
+            response = response.replace(body = filter_body)
+        
             item = response.meta['item']
             replynum = response.meta['replynum']
             posttype = response.meta['posttype']
@@ -111,20 +114,21 @@ class JijinbaSpider(Spider):
 
             if posttype:#针对公告的帖子
                 try:
-                     postcontent =response.xpath('//span[@class="zwtitlepdf"]//a/@href').extract()[0]
-                     item['content']['content'] = postcontent
+                        postcontent =response.xpath('//span[@class="zwtitlepdf"]//a/@href').extract()[0]
+                        item['content']['content'] = postcontent
                 except:
                     try:
-                        postcontent =response.xpath('//p[@style="line-height: 164.28%;"]//a/@href').extract()[0]
+                        postcontent =response.xpath('//div[@class="stockcodec"]//a/@href').extract()[0]
                         item['content']['content'] = postcontent
                     except Exception as ex:
-                        print("The announcement can't be crawled:" + response.url)
+                        print("Crawl announcement failed:" + response.url)
 
                 posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
                 item['content']['title'] = posttitle[0].strip() + "[Announcement]"
             else:#针对普通的帖子
                 postcontent = response.xpath('//div[@class="stockcodec"]/text()').extract()
-                item['content']['content'] = postcontent[0].strip()
+                postcontent = "".join(postcontent).strip()
+                item['content']['content'] = postcontent
         
                 posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
                 item['content']['title'] = posttitle[0].strip()
@@ -137,10 +141,17 @@ class JijinbaSpider(Spider):
                     rptotal = int(replynum) //30
                 head = re.search('(.+?)\.html', response.url).group(1)
                 for i in range(1,rptotal + 1):
-                    reply_url = head + "_" + str(i) + ".html"
-                    yield Request(url = reply_url, meta = {'item': item}, callback = self.parse_reply)
+                    if i <rptotal:
+                        reply_url = head + "_" + str(i) + ".html"
+                        yield Request(url = reply_url, meta = {'item': item}, callback = self.parse_reply)
+                    else:
+                        reply_url = head + "_" + str(i) + ".html"
+                        yield Request(url = reply_url, meta = {'item': item}, callback = self.parse_reply)
+                        yield item
             else:
                 yield item
+        except Exception as ex:
+            self.logger.warn('Parse Exception all: %s %s' % (str(ex), response.url))
 
     def parse_reply(self, response):
         item = response.meta['item']
@@ -187,4 +198,5 @@ class JijinbaSpider(Spider):
                 reply['reply_quote_content'] = reply_quote_content[0].strip()
 
             item['content']['reply'].append(reply)
+
 
