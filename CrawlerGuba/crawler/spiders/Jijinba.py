@@ -31,9 +31,9 @@ class JijinbaSpider(Spider):
             item = JijinbaItem()
             item['content'] = {} 
             fund_name = fund.extract()
-            item['content'] ['jijinba_name'] = fund_name
+            item['content'] ['guba_name'] = fund_name
             url_fund = "http://jijinba.eastmoney.com/topic," + re.search('(\d+)',fund_name).group() + ".html"
-            item['content'] ['jijinba_url'] = url_fund
+            item['content'] ['guba_url'] = url_fund
             yield Request(url = url_fund, meta = {'item':item}, callback = self.parse_page_num)
 
         #解析每个论坛的页数  
@@ -65,13 +65,13 @@ class JijinbaSpider(Spider):
         for post in posts:
             readnum = Selector(text = post).xpath('//span[@class="l1"]/text()').extract()
             if readnum:
-                readnum = int(readnum[0])
-                item['content']['readnum'] = readnum
+                readnum = readnum[0]
+                item['content']['readnum'] = int(readnum)
             
             replynum = Selector(text = post).xpath('//span[@class="l2"]/text()').extract()
             if replynum:
                 replynum = replynum[0]
-                item['content']['replynum'] = replynum
+                item['content']['replynum'] = int(replynum)
             
             url = Selector(text = post).xpath('//span[@class="l3"]/a/@href').extract()
             posttype = Selector(text = post).xpath('//span[@class="l3"]//em[@class="hinfo"]/text()').extract()
@@ -120,8 +120,13 @@ class JijinbaSpider(Spider):
                     try:
                         postcontent =response.xpath('//div[@class="stockcodec"]//a/@href').extract()[0]
                         item['content']['content'] = postcontent
-                    except Exception as ex:
-                        print("Crawl announcement failed:" + response.url)
+                    except:
+                        try:
+                            postcontent =response.xpath('//p[@style="line-height: 164.28%;"]/text()').extract()
+                            postcontent = "".join(postcontent).strip()
+                            item['content']['content'] = postcontent
+                        except:
+                            print("Crawl announcement failed:" + response.url)
 
                 posttitle = response.xpath('//div[@id="zwconttbt"]/text()').extract()
                 item['content']['title'] = posttitle[0].strip() + "[Announcement]"
@@ -134,16 +139,19 @@ class JijinbaSpider(Spider):
                 item['content']['title'] = posttitle[0].strip()
 
             item['content']['reply'] = []
-            if int(replynum):
-                if int(replynum) % 30:
-                    rptotal = int(replynum) // 30 +1
-                else:
-                    rptotal = int(replynum) // 30
+            
+            if int(replynum) % 30 > 0:
+                rptotal = int(replynum) // 30 +1
+            else:
+                rptotal = int(replynum) // 30
+
+            if rptotal > 0:
                 head = re.search('(.+?)\.html', response.url).group(1)
-                reply_url = head + "_" + str(1) + ".html"
+                reply_url = head + ".html#storeply"
                 yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':1, 'rptotal':rptotal}, callback = self.parse_reply)
             else:
                 yield item
+
         except Exception as ex:
             self.logger.warn('Parse Exception all: %s %s' % (str(ex), response.url))
 
@@ -197,7 +205,7 @@ class JijinbaSpider(Spider):
             item['content']['reply'].append(reply)
 
         if page < rptotal:
-            reply_url = head + "_" + str(page + 1) + ".html"
+            reply_url = head + "_" + str(page + 1) + ".html#storeply"
             yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':page + 1, 'rptotal':rptotal}, callback = self.parse_reply)
         else:
             yield item
