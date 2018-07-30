@@ -17,11 +17,11 @@ class TestspiderSpider(Spider):
     
 
     def start_requests(self):
-         start_urls = 'http://guba.eastmoney.com/news,of270004,196140348_1.html'
+         start_urls = 'http://guba.eastmoney.com/news,of160630,230625294_1.html'
          item = TestItem()
          item['content'] = {}
          item['content']['reply'] = []
-         head = 'http://guba.eastmoney.com/news,of270004,196140348'
+         head = 'http://guba.eastmoney.com/news,of160630,230625294'
          rptotal = 1
          yield Request(url = start_urls, meta = {'item': item, 'head':head, 'page':1, 'rptotal':rptotal}, callback = self.parse_reply)
 
@@ -78,8 +78,10 @@ class TestspiderSpider(Spider):
 
             item['content']['reply'].append(reply)
 
+            print(item['content']['reply'][0:])
+
         if page < rptotal:
-            reply_url = head + "_" + str(page + 1) + ".html"
+            reply_url = head + "_" + str(page + 1) + ".html#storeply"
             yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':page + 1, 'rptotal':rptotal}, callback = self.parse_reply)
         else:
             yield item

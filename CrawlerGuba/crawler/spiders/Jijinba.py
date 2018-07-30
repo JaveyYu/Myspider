@@ -147,7 +147,7 @@ class JijinbaSpider(Spider):
 
             if rptotal > 0:
                 head = re.search('(.+?)\.html', response.url).group(1)
-                reply_url = head + ".html#storeply"
+                reply_url = head +"_" + str(1) + ".html#storeply"
                 yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':1, 'rptotal':rptotal}, callback = self.parse_reply)
             else:
                 yield item
@@ -157,10 +157,7 @@ class JijinbaSpider(Spider):
 
     def parse_reply(self, response):
         item = response.meta['item']
-        rptotal = response.meta['rptotal']
-        head = response.meta['head']
-        page = response.meta['page']
-        
+
         replists = response.xpath('//div[@class="zwli clearfix"]').extract()
         for replist in replists:
             reply = {} 
@@ -204,6 +201,9 @@ class JijinbaSpider(Spider):
 
             item['content']['reply'].append(reply)
 
+        head = response.meta['head']
+        page = response.meta['page']
+        rptotal = response.meta['rptotal']
         if page < rptotal:
             reply_url = head + "_" + str(page + 1) + ".html#storeply"
             yield Request(url = reply_url, meta = {'item': item, 'head':head, 'page':page + 1, 'rptotal':rptotal}, callback = self.parse_reply)
