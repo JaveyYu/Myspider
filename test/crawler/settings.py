@@ -48,21 +48,8 @@ COOKIES_ENABLED = True
 COOKIES_DEBUG = False
 COOKIES = [{
     #登陆cookie
-
-    'save_jy_login_name':'18612209787',
-    'myuid':'135411950',
-    'PHPSESSID':'bd4ce2f85fa15b05b59f10ab2b0f1e80',
-    'SESSION_HASH':'77bb57375ddebf98a0824c2a8dbda4038fa3bc33',
-    'RAW_HASH':'DUjjxkRW7clY9OUYcQbrhXYYK3CmDnv4YIln%2ASPVr0a19NBmea0pAS7TIwMST31km-PW80Ww2G5Lhg-q0k6N-1pyOY7-R07xzhN47kYcYKM96Io.',
-    'COMMON_HASH':'6d1004e6a377b454d1ab9307a31154c8',
-    'sl_jumper':'%26cou%3D17%26omsg%3D0%26dia%3D0%26lst%3D2018-09-05',
-    'upt':'bd9j2NEb8wrWnBwNRCYmK7QfPy6oJgI3f%2AO7hpMxHpRFUA%2ABCvD8WxImUK51gxVWeR3TFBh%2A0qZZOVhtDyql-lq8OSc.',
-    'user_access':'1',
-    'name':'18612209787',
-    'password':'shiyan5201314',
-    'remem_pass':'on',
-    'ajaxsubmit':'1',
-    'ljg_login':'1',
+    'SESSION_HASH' : '57465b73b799430aa123ac21da9e1f65479dcf02',
+    'pclog':'%7B%22136411950%22%3A%221536235131379%'
     }]
 
 
