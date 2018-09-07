@@ -43,3 +43,4 @@ class TestspiderSpider(Spider):
         content = response.xpath('//ul//div[@class="fl pr"]/em/text()').extract()
         print(content)
         #pass
+
