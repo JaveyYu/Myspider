@@ -17,7 +17,7 @@ class TestspiderSpider(Spider):
     name = 'CrawlerTest'
 
     def start_requests(self):
-        start_urls = pd.read_csv('C:\Users\T440-Yu\source\repos\Myspider\CrawlerJiayuan\crawler\spiders\url.csv')
+        #start_urls = pd.read_csv('url.csv')
         start_urls = 'http://www.jiayuan.com/167625797'
         login_url = 'http://login.jiayuan.com/'
         item = TestItem()

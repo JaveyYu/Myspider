@@ -5,10 +5,24 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy.item import Item, Field
 
 
-class CrawlerItem(scrapy.Item):
+class CrawlerItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class JiayuanItem(Item):
+    ID = Field()
+    Education = Field()
+    Height = Field()
+    Car = Field()
+    Salary = Field()
+    House = Field()
+    Weight = Field()
+    Constellation = Field()
+    Ethnic = Field()
+    zodiac = Field()
+    Blood_type = Field()
+
