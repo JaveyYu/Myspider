@@ -49,4 +49,5 @@ class JiayuanSpider(Spider):
             item['Blood_type'] = content[9]
             yield item
 
+
         
