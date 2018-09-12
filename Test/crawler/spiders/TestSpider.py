@@ -35,13 +35,25 @@ class TestspiderSpider(Spider):
         yield FormRequest.from_response(response, formdata = login_data, callback = self.parse)
 
     def parse(self, response):
-        url = 'http://www.jiayuan.com/167625797'
-        yield Request(url = url, callback = self.parse_item)
+        url = 'http://search.jiayuan.com/v2/search_v2.php'
+        yield FormRequest(url = url, formdata = {'sex': 'f'}, meta = {'url':url, 'sex': 'f'}, callback = self.parse_page_num)
+
+    def parse_page_num(self, response):
+        url = response.meta['url']
+        sex = response.meta['sex']
+        result = json.loads(response.body)
+        pageTotal = result['pageTotal']
+        for p in range(pageTotal):
+            yield FormRequest(url = url, formdata = {'sex' : sex, 'p' : str(p+1)}, callback = self.parse_item)
 
     def parse_item(self, response):
-        title = response.xpath('//div[@class="fl f_gray_999"]/text()').extract()
-        content = response.xpath('//ul//div[@class="fl pr"]/em/text()').extract()
-        print(content)
+        #title = response.xpath('//div[@class="fl f_gray_999"]/text()').extract()
+        #content = response.xpath('//ul//div[@class="fl pr"]/em/text()').extract()
+        result = json.loads(response.body)
+        #print(result)
+        a=len(result['userInfo']['00']['realUid'])
+        print(a)
+        print
         #pass
 
 
