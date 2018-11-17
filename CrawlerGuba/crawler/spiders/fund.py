@@ -13,8 +13,8 @@ import copy
 import pymongo
 import json
 
-class JijinbaSpider(Spider):
-    name = 'CrawlerJijinba'
+class FundSpider(Spider):
+    name = 'CrawlerFund'
      #logger = util.set_logger(name, LOG_FILE_JIJINBA)
     #handle_httpstatus_list = [404]
      #website_possible_httpstatus_list = [404]
@@ -25,7 +25,6 @@ class JijinbaSpider(Spider):
         #解析一开始的网址
     def parse(self, response):
         fund_all = response.xpath('//div[@class="num_box"]//li//a[1]/text()')
-        fund_all
         #爬取所有基金吧的地址和名字
         for fund in fund_all:
             item = JijinbaItem()
@@ -55,8 +54,8 @@ class JijinbaSpider(Spider):
                     yield Request(url = page_url, meta = {'item':item }, callback = self.parse_post_list)
             else:
                    yield item
-        except:
-            yield Request(url = response.url, meta = {'item':item }, callback = self.parse_post_list)
+        except Exception as ex:
+            print("Decode webpage failed: " + response.url)
                     
 
     def parse_post_list(self, response):
@@ -108,9 +107,18 @@ class JijinbaSpider(Spider):
             create_time = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
             item['content']['create_time'] = create_time
 
-            author_url = response.xpath('//div[@id="zwconttb"]//a/@href')
-            if author_url:
-                item['content']['author_url'] = author_url.extract()[0]
+            try:   #针对股吧用户
+                    author_url = response.xpath('//div[@id="zwconttbn"]/strong/a/@href').extract()[0]
+                    item['content']['author_url'] = author_url
+            except:
+                    try:  #针对非股吧用户
+                        author = response.xpath('//div[@id="zwconttbn"]//span/text()').extract()[0]
+                        item['content']['author'] = author
+
+                    except Exception as ex:
+                            print("Decode webpage failed:" + response.url)
+                            return
+
 
             if posttype:#针对公告的帖子
                 try:

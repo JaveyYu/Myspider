@@ -9,7 +9,7 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'CrawlerJijinba'
+BOT_NAME = 'CrawlerFund'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
@@ -131,7 +131,7 @@ COOKIES_DEBUG = False
 
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
-MONGODB_DBNAME = 'Jijinba'
+MONGODB_DBNAME = 'Fund'
 
 # Redis
 # Enables scheduling storing requests queue in redis.

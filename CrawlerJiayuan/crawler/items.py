@@ -8,21 +8,26 @@
 from scrapy.item import Item, Field
 
 
-class CrawlerItem(Item):
+#class CrawlerItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+#    pass
+
+#class JiayuanItem(Item):
+#    ID = Field()
+#    Education = Field()
+#    Height = Field()
+#    Car = Field()
+#    Salary = Field()
+#    House = Field()
+#    Weight = Field()
+#    Constellation = Field()
+#    Ethnic = Field()
+#    zodiac = Field()
+#    Blood_type = Field()
 
 class JiayuanItem(Item):
-    ID = Field()
-    Education = Field()
-    Height = Field()
-    Car = Field()
-    Salary = Field()
-    House = Field()
-    Weight = Field()
-    Constellation = Field()
-    Ethnic = Field()
-    zodiac = Field()
-    Blood_type = Field()
+    url = Field()
+    fp = Field()
+    content = Field()
 

@@ -10,7 +10,7 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>CrawlerGuba</Name>
+    <Name>CrawlerFund</Name>
     <RootNamespace>CrawlerGuba</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="crawler\middleware.py" />
-    <Compile Include="crawler\spiders\Jijinba.py" />
+    <Compile Include="crawler\spiders\fund.py" />
     <Compile Include="crawler\spiders\util.py">
       <SubType>Code</SubType>
     </Compile>

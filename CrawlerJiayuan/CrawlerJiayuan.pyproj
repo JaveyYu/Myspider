@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7432450d-61ea-42dd-8c1d-b57801174943</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>CrawlerJiayuan.py</StartupFile>
+    <StartupFile>runspider.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,9 +21,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CrawlerJiayuan.py" />
+    <Compile Include="crawler\spiders\member_info.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="runspider.py" />
     <Compile Include="crawler\items.py" />
-    <Compile Include="crawler\middlewares.py" />
+    <Compile Include="crawler\middleware.py" />
     <Compile Include="crawler\pipelines.py" />
     <Compile Include="crawler\settings.py" />
     <Compile Include="crawler\spiders\Jiayuan.py" />
@@ -40,7 +43,6 @@
     <Folder Include="crawler\__pycache__\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="crawler\spiders\url.csv" />
     <Content Include="scrapy.cfg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

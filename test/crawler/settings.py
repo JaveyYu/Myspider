@@ -43,14 +43,14 @@ USER_AGENTS = [
 ]
 
 # Cookies settings
-DOWNLOADER_STATS = True
-COOKIES_ENABLED = True
-COOKIES_DEBUG = False
-COOKIES = [{
-    #登陆cookie
-    'SESSION_HASH' : '57465b73b799430aa123ac21da9e1f65479dcf02',
-    'pclog':'%7B%22136411950%22%3A%221536235131379%'
-    }]
+#DOWNLOADER_STATS = True
+#COOKIES_ENABLED = True
+#COOKIES_DEBUG = False
+#COOKIES = [{
+#    #登陆cookie
+#    'SESSION_HASH' : '57465b73b799430aa123ac21da9e1f65479dcf02',
+#    'pclog':'%7B%22136411950%22%3A%221536235131379%'
+#    }]
 
 
 
