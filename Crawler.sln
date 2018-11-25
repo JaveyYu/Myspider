@@ -9,6 +9,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerFund", "CrawlerGuba\
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerJiayuan", "CrawlerJiayuan\CrawlerJiayuan.pyproj", "{7432450D-61EA-42DD-8C1D-B57801174943}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerPatent", "CrawlerPatent\CrawlerPatent.pyproj", "{8AFC09AC-42C7-4AA4-B7ED-4BD7DCDF49FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{00F223F3-804E-4AFA-85BA-45B4F227CE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7432450D-61EA-42DD-8C1D-B57801174943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7432450D-61EA-42DD-8C1D-B57801174943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AFC09AC-42C7-4AA4-B7ED-4BD7DCDF49FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AFC09AC-42C7-4AA4-B7ED-4BD7DCDF49FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

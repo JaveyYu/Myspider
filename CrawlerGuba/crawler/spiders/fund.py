@@ -48,19 +48,20 @@ class FundSpider(Spider):
             else:
                 page_total = item['content']['postnums'] // 80
 
-            if page_total:
+            if page_total>0:
                 for i in range(1,page_total + 1):
                     page_url = "http://guba.eastmoney.com/list,of"+heads+str(i)+".html"
-                    yield Request(url = page_url, meta = {'item':item }, callback = self.parse_post_list)
+                    
+                    yield Request(page_url, meta = {'item':item}, callback = self.parse_list)
+                    print(page_url)
             else:
                    yield item
         except Exception as ex:
             print("Decode webpage failed: " + response.url)
-                    
 
-    def parse_post_list(self, response):
+    def parse_list(self, response):
         item = response.meta['item']
-        posts = response.xpath('//div[@class="articleh"]').extract()
+        posts = response.xpath('//div[@class="articleh"] | //div[@class="articleh odd"]').extract()
         for post in posts:
             readnum = Selector(text = post).xpath('//span[@class="l1"]/text()').extract()
             if readnum:
@@ -118,7 +119,6 @@ class FundSpider(Spider):
                     except Exception as ex:
                             print("Decode webpage failed:" + response.url)
                             return
-
 
             if posttype:#针对公告的帖子
                 try:
@@ -218,4 +218,5 @@ class FundSpider(Spider):
         else:
             yield item
                        
+
 
