@@ -38,8 +38,6 @@ class PatentSpider(Spider):
         yield body
         
 
-
-
         #login_data = {
         #    'j_username':'javey',
         #    'j_password':'yujiawei960630'

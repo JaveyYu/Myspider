@@ -11,6 +11,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerJiayuan", "CrawlerJi
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerPatent", "CrawlerPatent\CrawlerPatent.pyproj", "{8AFC09AC-42C7-4AA4-B7ED-4BD7DCDF49FF}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerAirbnb", "CrawlerAirbnb\CrawlerAirbnb.pyproj", "{867CE5ED-6F3E-4C15-A95C-AD8B1F6EB31C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,8 @@ Global
 		{7432450D-61EA-42DD-8C1D-B57801174943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AFC09AC-42C7-4AA4-B7ED-4BD7DCDF49FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AFC09AC-42C7-4AA4-B7ED-4BD7DCDF49FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{867CE5ED-6F3E-4C15-A95C-AD8B1F6EB31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{867CE5ED-6F3E-4C15-A95C-AD8B1F6EB31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
