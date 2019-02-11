@@ -81,15 +81,3 @@ class CustomHttpTunnelMiddleware(object):
         if isinstance(exception, DONT_RETRY_ERRORS):
             logger.info("Middleware Exception %s, %s" % (request.url, exception))
             return self.add_proxy(request)
-
-
-
-
-class CookiesMiddleware(object):
-    
-    
-    def process_request(self,request,spider):
-        cookie = random.choice(get_cookie_from_mongodb())
-        request.cookies = cookie
-
-
