@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b7730acc-0af2-4645-80b2-7e453ea48894</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>CookiesPool.py</StartupFile>
+    <StartupFile>runspider.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

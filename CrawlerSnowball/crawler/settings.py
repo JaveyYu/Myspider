@@ -88,9 +88,8 @@ DOWNLOADER_STATS = True
 COOKIES_ENABLED = True
 COOKIES_DEBUG = False
 COOKIES = [{
-    'u' : '	2270920225',
-    'xq_a_token' : '115477539178d6be396e2df23be2b50d805055e4',
-    'xq_r_token' : '93ca39c6c36a47ebc321c9a25e75219e91329c16'
+    'xq_a_token' : '668d3197161bd1a6eff003331cde4a8ef73e38e7',
+    'xq_r_token' : 'c21252196a9adc011c58b52ac549c10fefc227bb'
 }]
 
 

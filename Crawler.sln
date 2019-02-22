@@ -13,7 +13,7 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerSnowball", "CrawlerS
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CookiesPool", "CookiesPool\CookiesPool.pyproj", "{E803801A-7EC4-46A8-8C92-202A4FBA62E6}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "XQCookiesPool", "XQCookiesPool\XQCookiesPool.pyproj", "{EEF9AC15-0335-481E-A5E2-930B0CF02576}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "appCookiesPool", "appCookiesPool\appCookiesPool.pyproj", "{6B7D2623-D6D8-4371-A660-E496F9D472E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,8 +31,8 @@ Global
 		{B7730ACC-0AF2-4645-80B2-7E453EA48894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E803801A-7EC4-46A8-8C92-202A4FBA62E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E803801A-7EC4-46A8-8C92-202A4FBA62E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEF9AC15-0335-481E-A5E2-930B0CF02576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEF9AC15-0335-481E-A5E2-930B0CF02576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7D2623-D6D8-4371-A660-E496F9D472E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7D2623-D6D8-4371-A660-E496F9D472E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

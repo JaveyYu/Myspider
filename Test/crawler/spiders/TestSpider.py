@@ -17,18 +17,13 @@ class TestspiderSpider(Spider):
     name = 'CrawlerTest'
 
     def start_requests(self):
-        #start_urls = pd.read_csv('url.csv')
-        start_urls = 'http://www.jiayuan.com/167625797'
-        login_url = 'http://login.jiayuan.com/'
-        item = TestItem()
+        start_url = 'https://xueqiu.com'
+        yield Request(start_url, callback = self.parse)
+
+    def parse(self, response):
+        next = response.xpath('//li[@class="_b8vexar"]//a/@href').extract()
          
-        """
-        初始化Redis连接
-        :param host: abc
-        :param port: hui
-        :param password: buis
-        """
-        print(password)
+        print()
 
 
 

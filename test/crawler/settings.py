@@ -53,4 +53,13 @@ USER_AGENTS = [
 #    }]
 
 
+DOWNLOADER_MIDDLEWARES = {
+    'crawler.middleware.RandomRequestHeaders': 100,
+    'crawler.middleware.CustomHttpTunnelMiddleware': 200,
+    'crawler.middleware.SeleniumMiddleware' : 543,
+}
+SELENIUM_TIMEOUT = 5
+CHROME_SERVICE_ARGS = []
 
+USERNAME = '1947324800'
+PASSWORD = 'brhdgs72568'

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>e803801a-7ec4-46a8-8c92-202a4fba62e6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Login\login.py</StartupFile>
+    <StartupFile>run.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,18 +21,53 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CookiesPool.py" />
-    <Compile Include="cookiespool\__init__.py" />
-    <Compile Include="Login\login.py">
+    <Compile Include="accounts\importer.py" />
+    <Compile Include="accounts\__init__.py" />
+    <Compile Include="cookiespool\api.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Login\__init__.py">
+    <Compile Include="cookiespool\config.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cookiespool\generator.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cookiespool\db.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cookiespool\scheduler.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cookiespool\tester.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cookiespool\util.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="login\login.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="login\proxy_extension.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="run.py" />
+    <Compile Include="cookiespool\__init__.py" />
+    <Compile Include="login\__init__.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="accounts\" />
     <Folder Include="cookiespool\" />
-    <Folder Include="Login\" />
+    <Folder Include="cookiespool\__pycache__\" />
+    <Folder Include="login\" />
+    <Folder Include="login\__pycache__\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cookiespool\__pycache__\config.cpython-37.pyc" />
+    <Content Include="cookiespool\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="login\__pycache__\login.cpython-37.pyc" />
+    <Content Include="login\__pycache__\__init__.cpython-37.pyc" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
