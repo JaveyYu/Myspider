@@ -9,13 +9,9 @@ password = '123456789'
 def main():
     #l = CookiesGenerate(username,password)
     #cookie = l.main()
-    #s = Import()
-    #s.scan()
-    #print('a')
+
     s = Scheduler()
     s.run()
-    #t=XueqiuValidTester()
-    #t.run()
     
 
 
