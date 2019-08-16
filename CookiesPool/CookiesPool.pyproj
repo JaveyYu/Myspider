@@ -44,10 +44,20 @@
     <Compile Include="cookiespool\util.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="login\chaojiying.py" />
+    <Compile Include="login\login_weibo_selenium.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="login\login.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="login\login_weibo.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="login\proxy_extension.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="login\test.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="run.py" />
@@ -58,12 +68,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="accounts\" />
+    <Folder Include="accounts\__pycache__\" />
     <Folder Include="cookiespool\" />
     <Folder Include="cookiespool\__pycache__\" />
     <Folder Include="login\" />
+    <Folder Include="login\template\" />
     <Folder Include="login\__pycache__\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="accounts\__pycache__\importer.cpython-37.pyc" />
+    <Content Include="accounts\__pycache__\__init__.cpython-37.pyc" />
     <Content Include="cookiespool\__pycache__\config.cpython-37.pyc" />
     <Content Include="cookiespool\__pycache__\__init__.cpython-37.pyc" />
     <Content Include="login\__pycache__\login.cpython-37.pyc" />
