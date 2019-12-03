@@ -2,10 +2,9 @@ import os
 import time
 import random
 import pymongo
-import pytesseract
 import numpy as np
 from io import BytesIO
-from PIL import Image, ImageEnhance
+from PIL import Image
 from cookiespool import util
 from cookiespool.config import *
 from selenium import webdriver
@@ -240,11 +239,14 @@ class CookiesGenerate(object):
         self.Imgpath = 'login/template/screenImg.png'
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[2]/div/p/a[1]'))).click()
         self.ocr_main()
-        try:
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/div/div[2]/div[2]/p/a[1]'))).click()
-        except:
-            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[1]/div[1]/p[3]/a'))).click()
-            self.ocr_main()
+        time.sleep(1)
+        while True:
+            if self.browser.current_url == 'https://api.weibo.com/oauth2/authorize':
+                self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/div/div[2]/div[2]/p/a[1]'))).click()
+                break
+            else:
+                self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[1]/div[1]/p[3]/a'))).click()
+                self.ocr_main()
         self.alert_box()
         ##########滑块验证码
         if len(self.browser.window_handles) == 2:

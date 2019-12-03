@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3f9fca6c-4a94-42f2-988c-e97f1bd6db90}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile />
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="CookiesPool\accounts\accounts.txt" />
+    <Content Include="CookiesPool\accounts\accounts_test.txt" />
+    <Content Include="CookiesPool\login\accounts.txt" />
+    <Content Include="CookiesPool\login\template\cut.png" />
+    <Content Include="CookiesPool\login\template\full.png" />
+    <Content Include="CookiesPool\login\template\screenImg.png" />
+    <Content Include="CookiesPool\source.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CookiesPool\accounts\importer.py" />
+    <Compile Include="CookiesPool\accounts\__init__.py" />
+    <Compile Include="CookiesPool\cookiespool\api.py" />
+    <Compile Include="CookiesPool\cookiespool\config.py" />
+    <Compile Include="CookiesPool\cookiespool\db.py" />
+    <Compile Include="CookiesPool\cookiespool\generator.py" />
+    <Compile Include="CookiesPool\cookiespool\scheduler.py" />
+    <Compile Include="CookiesPool\cookiespool\tester.py" />
+    <Compile Include="CookiesPool\cookiespool\util.py" />
+    <Compile Include="CookiesPool\cookiespool\__init__.py" />
+    <Compile Include="CookiesPool\login\chaojiying.py" />
+    <Compile Include="CookiesPool\login\login.py" />
+    <Compile Include="CookiesPool\login\login_weibo.py" />
+    <Compile Include="CookiesPool\login\login_weibo_selenium.py" />
+    <Compile Include="CookiesPool\login\proxy_extension.py" />
+    <Compile Include="CookiesPool\login\test.py" />
+    <Compile Include="CookiesPool\login\__init__.py" />
+    <Compile Include="CookiesPool\run.py" />
+    <Compile Include="CrawlerAirbnb\crawler\items.py" />
+    <Compile Include="CrawlerAirbnb\crawler\middleware.py" />
+    <Compile Include="CrawlerAirbnb\crawler\pipelines.py" />
+    <Compile Include="CrawlerAirbnb\crawler\settings.py" />
+    <Compile Include="CrawlerAirbnb\crawler\spiders\airbnb.py" />
+    <Compile Include="CrawlerAirbnb\crawler\spiders\util.py" />
+    <Compile Include="CrawlerAirbnb\crawler\spiders\__init__.py" />
+    <Compile Include="CrawlerAirbnb\crawler\__init__.py" />
+    <Compile Include="CrawlerAirbnb\runspider.py" />
+    <Compile Include="CrawlerJiayuan\CrawlerJiayuan.py" />
+    <Compile Include="CrawlerJiayuan\crawler\items.py" />
+    <Compile Include="CrawlerJiayuan\crawler\middleware.py" />
+    <Compile Include="CrawlerJiayuan\crawler\middlewares.py" />
+    <Compile Include="CrawlerJiayuan\crawler\pipelines.py" />
+    <Compile Include="CrawlerJiayuan\crawler\settings.py" />
+    <Compile Include="CrawlerJiayuan\crawler\spiders\Jiayuan.py" />
+    <Compile Include="CrawlerJiayuan\crawler\spiders\member_info.py" />
+    <Compile Include="CrawlerJiayuan\crawler\spiders\util.py" />
+    <Compile Include="CrawlerJiayuan\crawler\spiders\__init__.py" />
+    <Compile Include="CrawlerJiayuan\crawler\__init__.py" />
+    <Compile Include="CrawlerJiayuan\runspider.py" />
+    <Compile Include="Test\crawler\items.py" />
+    <Compile Include="Test\crawler\middleware.py" />
+    <Compile Include="Test\crawler\pipelines.py" />
+    <Compile Include="Test\crawler\settings.py" />
+    <Compile Include="Test\crawler\spiders\TestSpider.py" />
+    <Compile Include="Test\crawler\spiders\util.py" />
+    <Compile Include="Test\crawler\spiders\__init__.py" />
+    <Compile Include="Test\crawler\__init__.py" />
+    <Compile Include="Test\Test.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CookiesPool" />
+    <Folder Include="CookiesPool\accounts" />
+    <Folder Include="CookiesPool\cookiespool" />
+    <Folder Include="CookiesPool\login" />
+    <Folder Include="CookiesPool\login\template" />
+    <Folder Include="CrawlerAirbnb" />
+    <Folder Include="CrawlerAirbnb\crawler" />
+    <Folder Include="CrawlerAirbnb\crawler\spiders" />
+    <Folder Include="CrawlerJiayuan" />
+    <Folder Include="CrawlerJiayuan\crawler" />
+    <Folder Include="CrawlerJiayuan\crawler\spiders" />
+    <Folder Include="Test" />
+    <Folder Include="Test\crawler" />
+    <Folder Include="Test\crawler\spiders" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
