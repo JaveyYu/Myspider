@@ -30,9 +30,6 @@ class SAC(object):
         page_source = self.browser.page_source
         tables = Selector(text = page_source).xpath('//tbody[@id="publicityOtherList"]//td/text() | //tbody[@id="publicityOtherList"]//td//a/text()').extract()
         for table in tables:
-            print(table)
-         #tables = self.wait.until(EC.presence_of_all_elements_located((By.XPATH,'//tbody[@id="publicityOtherList"]//td |//tbody[@id="publicityOtherList"]//td//a')))
-        for table in tables:
             print(table.text)
 
 # 选择下拉框
