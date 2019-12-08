@@ -24,20 +24,13 @@
     <Compile Include="run.py" />
     <Compile Include="spider\CrawlerSAC.py" />
     <Compile Include="spider\settings.py" />
-    <Compile Include="spider\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="spider\__init__.py" />
     <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="spider\" />
-    <Folder Include="spider\__pycache__\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="spider\__pycache__\settings.cpython-37.pyc" />
-    <Content Include="spider\__pycache__\__init__.cpython-37.pyc" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

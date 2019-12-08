@@ -2,9 +2,10 @@ import os
 import time
 import random
 import pymongo
+import pytesseract
 import numpy as np
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageEnhance
 from cookiespool import util
 from cookiespool.config import *
 from selenium import webdriver
@@ -25,20 +26,20 @@ class CookiesGenerate(object):
     def __init__chrome_option(self):
         self.option = webdriver.ChromeOptions()
         #chrome 配置
-        #self.option.add_argument("--window-size=1920,1080")
+        self.option.add_argument("--window-size=1920x1080")
         self.option.add_argument("--start-maximized")
-        #self.option.add_argument('--headless')
+        self.option.add_argument('--headless')
         self.option.add_argument('user-agent=' + random.choice(USER_AGENTS))
 
 
     def open(self):
         self.browser = webdriver.Chrome(chrome_options=self.option)
-        #self.browser = webdriver.Firefox()
+        self.browser.delete_all_cookies()
         self.browser.get(self.url)
         self.wait = WebDriverWait(self.browser, 5)
         #找到首页上的登录按钮并点击
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="app"]/nav/div[1]/div[2]/div/div'))).click()
-        #找到登录界面的QQ登录按钮并点击
+        #找到登录界面的微博登录按钮并点击
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[3]/div[1]/div/div/div[2]/div[5]/ul/li[3]/a/i'))).click()
         #找到账号密码登录按钮并点击
         time.sleep(0.5)
@@ -51,10 +52,11 @@ class CookiesGenerate(object):
     ###################-----------OCR验证码------------------------#####################
     def ocr_main(self):
         # 获取验证码图片并下载到本地
+        time.sleep(1)
         scimg = self.wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[1]/div[1]/p[3]/span/img')))
         self.browser.save_screenshot(self.Imgpath)
         top = 207
-        bottom = top + 30
+        bottom = top + 35
         left = 513.75
         right = left + 75
         img = Image.open(self.Imgpath).crop((left,top,right,bottom))
@@ -84,8 +86,10 @@ class CookiesGenerate(object):
     def captcha_identify(self):
         '''用超极鹰进行识别'''
         img  = open(self.Imgpath, 'rb').read()
-        chaojiying = Chaojiying_Client('yujiawei96', 'yujiawei960630', '96001')
+        chaojiying = Chaojiying_Client('kingdatalab', 'zju211root', '96001')
         result = chaojiying.PostPic(img, 1902)
+        if result['err_no'] == -1005:
+            print('无可用题分，请给超极鹰充值')
         text = result['pic_str']
         return text
 
@@ -105,10 +109,17 @@ class CookiesGenerate(object):
 
     def get_image(self):
         #(top, bottom, left, right) = self.get_position('/html/body/div/div[2]/div[6]/div/div[1]/div[1]/div/a/div[1]/div')
-        # 根据网页实际情况，这里手动定义位置，确保抓下来图片大小一样
-        top = 129
+        
+        # 根据网页实际情况，这里手动定义位置，确保抓下来图片大小一样，此处为非headless模式下的位置
+        #top = 129
+        #bottom = top+160
+        #left = 247
+        #right =left +260
+        
+        # headless下的位置
+        top = 182
         bottom = top+160
-        left = 247
+        left = 255
         right =left +260
         screenshot = self.get_screenshot()
         captcha = screenshot.crop((left, top, right, bottom))
@@ -121,8 +132,8 @@ class CookiesGenerate(object):
         :param image2:带缺口的图片对象
         :return:需要移动的距离
         '''
-        threshold=60
-        left=20
+        threshold=100
+        left=50
         for i in range(left,image1.size[0]):
             for j in range(image1.size[1]):
                 rgb1=image1.load()[i,j]
@@ -131,8 +142,8 @@ class CookiesGenerate(object):
                 res2=abs(rgb1[1]-rgb2[1])
                 res3=abs(rgb1[2]-rgb2[2])
                 if not (res1 < threshold and res2 < threshold and res3 < threshold):
-                    return i - 7
-        return i - 7
+                    return i - 8.9
+        return i - 8.9
 
 
     def get_tracks(self, distance):
@@ -160,9 +171,9 @@ class CookiesGenerate(object):
         while current < distance:
             if current < mid:
                 # 加速度越小，单位时间的位移越小,模拟的轨迹就越多越详细
-                a= 2
+                a= 7 #+ random.random()
             else:
-                a=-3
+                a=-9 #+ random.random()
 
             #初速度
             v0=v
@@ -183,47 +194,61 @@ class CookiesGenerate(object):
         ActionChains(self.browser).click_and_hold(slider).perform()
         for x in tracks:
             ActionChains(self.browser).move_by_offset(xoffset=x, yoffset=random.randint(-1,1)).perform()
+        captcha = self.get_image()
+        captcha.save('login/template/test.png')
         time.sleep(0.5)
         ActionChains(self.browser).release().perform()
 
     def verify_successfully(self):
-        try:
-            self.browser.find_element_by_xpath('/html/body/div/div[2]/div[6]/div/div[1]/div[2]/div[2]')
+        if len(self.browser.window_handles) == 2:
             return False
-        except:
-            print(self.username, '：注册成功')
+        else:
+            print('注册成功')
             return True
 
-    def geetest_main(self):
-        while True:
-            # 获取有缺口的图片
-            element = self.wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[1]/div[1]/div/a/div[1]/div/canvas[2]')))
-            self.browser.execute_script("arguments[0].setAttribute('style', 'display:none')", element)
-            time.sleep(0.5)
-            captcha_cut = self.get_image()
-            captcha_cut.save('login/template/cut.png')
-            self.browser.execute_script("arguments[0].setAttribute('style', 'display:block')", element)
-            # 将缺口图片还原出原图
-            element = self.wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[1]/div[1]/div/a/div[1]/canvas')))
-            self.browser.execute_script("arguments[0].setAttribute('style', 'display:block')", element)
-            time.sleep(0.5)
-            captcha_full = self.get_image()
-            captcha_full.save('login/template/full.png')
-            self.browser.execute_script("arguments[0].setAttribute('style', 'display:none')", element)
+    def error_test(self):
+        '''在点击刷新后可能会出现错误提示，要点击后才能继续刷新'''
+        try:
+            error_button = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'geetest_panel_error_content'))).click()
+            time.sleep(1)
+        except:
+            print('Geetest no error')
+        return
 
-            # 获取移动轨迹
-            distance = self.get_distance(captcha_full, captcha_cut)
-            tracks=self.get_tracks(distance)
-            # 滑动验证
-            slider = self.wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[1]/div[2]/div[2]')))
-            self.move_to_gap(slider, tracks)
+    def geetest_main(self):
+        #while True:
+            # 获取有缺口的图片
+        element = self.wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[1]/div[1]/div/a/div[1]/div/canvas[2]')))
+        self.browser.execute_script("arguments[0].setAttribute('style', 'display:none')", element)
+        time.sleep(1)
+        captcha_cut = self.get_image()
+        captcha_cut.save('login/template/cut.png')
+        self.browser.execute_script("arguments[0].setAttribute('style', 'display:block')", element)
+            #将缺口图片还原出原图
+        element = self.wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[1]/div[1]/div/a/div[1]/canvas')))
+        self.browser.execute_script("arguments[0].setAttribute('style', 'display:block')", element)
+        time.sleep(1)
+        captcha_full = self.get_image()
+        captcha_full.save('login/template/full.png')
+        self.browser.execute_script("arguments[0].setAttribute('style', 'display:none')", element)
+
+            #获取移动轨迹
+        distance = self.get_distance(captcha_full, captcha_cut)
+        tracks=self.get_tracks(distance)
+            #滑动验证
+        slider = self.wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[1]/div[2]/div[2]')))
+        self.move_to_gap(slider, tracks)
             # 判断是否验证成功
-            if self.verify_successfully():
-                break
-            else:
-                refresh = self.wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[2]/div/a[2]')))
-                refresh.click()
-                self.geetest_main()
+            #time.sleep(2)
+            #if self.verify_successfully():
+            #    break
+            #else:
+            #    self.alert_box()
+            #    #判断是否有报错
+            #    self.error_test()
+            #    # 点击刷新图片按钮
+            #    self.wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div[2]/div[6]/div/div[2]/div/a[2]'))).click()
+            #    time.sleep(2)
     
     def alert_box(self):
         try:
@@ -232,33 +257,57 @@ class CookiesGenerate(object):
             prompt.accept()
         except:
             return
+###################-----------获取cookies------------------------#####################
+    def get_cookie(self):
+        cookies = self.browser.get_cookies()
+        cookie = {}
+        for item in cookies:
+            if item['name']=='xq_r_token':
+                cookie[item['name']] = item['value']
+        return cookie
 
     def main(self):
-        self.open()
-        #OCR验证码识别
-        self.Imgpath = 'login/template/screenImg.png'
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[2]/div/p/a[1]'))).click()
-        self.ocr_main()
-        time.sleep(1)
+        count = 1
         while True:
-            if self.browser.current_url == 'https://api.weibo.com/oauth2/authorize':
-                self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/div/div[2]/div[2]/p/a[1]'))).click()
-                break
+            try:
+                self.open()
+                #OCR验证码识别
+                self.Imgpath = 'login/template/screenImg.png'
+                self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[2]/div/p/a[1]'))).click()
+                while True:
+                    self.ocr_main()
+                    time.sleep(2)
+                    if self.browser.current_url == 'https://api.weibo.com/oauth2/authorize':
+                        try:
+                            self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[2]/div/p/a[1]'))).click()
+                        except:
+                            print('已连接雪球')
+                        # 点击允许授权
+                        self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/div/div[2]/div[2]/p/a[1]'))).click()
+                        break
+                    else:
+                        # 点击换一换按钮，换验证码图片
+                        self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[1]/div[1]/p[3]/a'))).click()
+                self.alert_box()
+                ##########滑块验证码
+                if len(self.browser.window_handles) == 2:
+                    self.geetest_main()
+                time.sleep(1)
+                self.browser.switch_to.window(self.browser.window_handles[0])
+                cookie = self.get_cookie()
+                self.browser.quit()
+                print('登录成功')
+                return cookie
+            except:
+                print('登录失败')
+            self.browser.quit()
+            if count <= 5:
+                count += 1
             else:
-                self.wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="outer"]/div/div[2]/form/div/div[1]/div[1]/p[3]/a'))).click()
-                self.ocr_main()
-        self.alert_box()
-        ##########滑块验证码
-        if len(self.browser.window_handles) == 2:
-            self.geetest_main()
-        self.browser.switch_to.window(self.browser.window_handles[0])
-        cookies = self.browser.get_cookies()
-        xq_r_token = cookies[4]['value']
-
-        self.browser.close()
-                                
-
-
+                cookie = None
+                return cookie
+            
+        
 
 if __name__ == '__main__':
     CookiesGenerate.main()

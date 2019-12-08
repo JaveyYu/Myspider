@@ -31,7 +31,60 @@ browser = webdriver.Chrome(chrome_options = option)
 browser.get(url)
 wait = WebDriverWait(browser, 5)
 wait.until(EC.presence_of_all_elements_located((By.XPATH,'//tbody//th')))
-page_source = browser.page_source
-tables = Selector(text = page_source).xpath('//tbody[@id="publicityOtherList"]//td/text() | //tbody[@id="publicityOtherList"]//td//a/text()').extract()
-print(page_source)
+
+
+institutions = browser.find_elements_by_xpath('//tbody[@id="publicityOtherList"]//tr//td[2]')
+institution = institutions[0]
+institution.click()
+browser.switch_to.window(browser.window_handles[1])
+heads = wait.until(EC.presence_of_all_elements_located((By.XPATH,'//div[@class="ui-jqgrid-hbox"]//table[@class="ui-jqgrid-htable"]')))[0].text.replace("\n", "").split()
+
+table_contents = wait.until(EC.presence_of_all_elements_located((By.XPATH,'//tbody//tr[@class="ui-widget-content jqgrow ui-row-ltr"]')))
+staff_info=[]
+for content in table_contents:
+    staff_info.append(content.text.split())
+staff_info = pd.DataFrame(staff_info)
+wait.until(EC.element_to_be_clickable((By.XPATH,'//td[@id="next"]'))).click()
+staffs = wait.until(EC.presence_of_all_elements_located((By.XPATH,'//tbody//td[@aria-describedby="list_RPI_NAME"]')))
+staff = staffs[0]
+wait.until(EC.element_to_be_clickable((By.XPATH,'//tbody//td[@aria-describedby="list_RPI_NAME"]'))).click()
+browser.switch_to.window(browser.window_handles[2])
+heads_cert = wait.until(EC.presence_of_all_elements_located((By.XPATH,'//tr//th')))
+
+table_contents= wait.until(EC.presence_of_all_elements_located((By.XPATH,'//table[1]//tbody//tr//td')))[2:]
+staff_info = []
+for content in table_contents:
+    staff_info.append(content.text)
+
+heads_record = []
+heads_record = wait.until(EC.presence_of_all_elements_located((By.XPATH,'//table[2]//tbody[1]//tr[2]')))[0].text.split()
+
+table_contents_record= wait.until(EC.presence_of_all_elements_located((By.XPATH,'//tbody[2]//tr')))
+content = table_contents_record[0].text.split()
+
+browser.close()
 browser.quit()
+
+
+
+
+
+# 选择下拉框
+#elememt = browser.find_element_by_xpath('//*[@id="otcId"]')
+
+## 实例化Select
+#select = Select(elememt)
+#select.select_by_index(0)
+
+#time.sleep(2)
+#table = elememts = browser.find_elements_by_xpath('//tbody[@id="publicityOtherList"]//tr//td[@align="center"]')
+
+
+
+
+self.institutions = pd.DataFrame(self.table_content, columns = self.head)
+self.institutions.to_csv('institutions.csv',index=0, encoding = "utf-8")
+
+
+
+
