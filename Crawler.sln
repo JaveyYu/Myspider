@@ -13,6 +13,10 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CookiesPool", "CookiesPool\
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerSAC", "CrawlerSAC\CrawlerSAC.pyproj", "{C32345E5-30B2-4E65-91F7-D64E21F21B56}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerCoin", "CrawlerCoin\CrawlerCoin.pyproj", "{2AC56CE6-19FB-4A2F-B044-F64E143CB6EB}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerInteract", "CrawlerInteract\CrawlerInteract.pyproj", "{C068AAA1-15A7-4F8B-87FF-6A821E8B4647}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{E803801A-7EC4-46A8-8C92-202A4FBA62E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C32345E5-30B2-4E65-91F7-D64E21F21B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C32345E5-30B2-4E65-91F7-D64E21F21B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC56CE6-19FB-4A2F-B044-F64E143CB6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC56CE6-19FB-4A2F-B044-F64E143CB6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C068AAA1-15A7-4F8B-87FF-6A821E8B4647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C068AAA1-15A7-4F8B-87FF-6A821E8B4647}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
