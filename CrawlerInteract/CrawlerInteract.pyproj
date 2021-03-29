@@ -28,11 +28,19 @@
     <Compile Include="crawler\spiders\deb.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="crawler\spiders\ehudong_q.py" />
+    <Compile Include="crawler\spiders\ehudong_qa.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="crawler\spiders\hudongyi.py" />
+    <Compile Include="crawler\spiders\hudongyi3.py" />
     <Compile Include="crawler\spiders\hudongyi2.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="crawler\spiders\test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="crawler\spiders\test_qa.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="crawler\spiders\util.py" />

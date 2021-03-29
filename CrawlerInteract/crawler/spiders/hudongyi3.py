@@ -14,7 +14,7 @@ import time
 
 class CoinSpider(Spider):
     start_at=datetime.now()
-    name='test'
+    name='hudongyi4'
 
     def start_requests(self):
         start_url="http://irm.cninfo.com.cn/ircs/company/question"
@@ -22,12 +22,12 @@ class CoinSpider(Spider):
         stocks = []
         for s in db.orgIDs.find():
             stocks.append(s)
-        stocks = stocks[0:3]
+
         all_page_n = len(stocks)
         for i in range(all_page_n):
             now_page_n = i
             stock = stocks[i]
-            if i%5==0:
+            if i%50==0:
                 self.logger.info('%s (%s / %s) %s%%' % (stock['stkcd'], str(now_page_n), str(all_page_n), str(round(float(now_page_n) / all_page_n * 100, 1))))
 
             data = {'stockcode' : stock['stkcd'], 'pageSize':'500', 'pageNum':'1', 'orgId' : stock['orgID']}
@@ -48,10 +48,9 @@ class CoinSpider(Spider):
                 item['content']['page'] = page
                 item['content']['maxpage'] = maxpage
                 yield item
-            if maxpage >1:
-                for page in range(2, (maxpage + 1)):
-                    data = {'stockcode' : stkcd, 'pageSize':'500', 'pageNum':str(page), 'orgId' : orgId}
-                    yield FormRequest(url = response.url, formdata = data, meta = {'page':page, 'stkcd':stkcd, 'orgId':orgId}, callback = self.parse_page)
+            for page in range(2, (maxpage + 1)):
+                data = {'stockcode' : stkcd, 'pageSize':'500', 'pageNum':str(page), 'orgId' : orgId}
+                yield FormRequest(url = response.url, formdata = data, meta = {'page':page, 'stkcd':stkcd, 'orgId':orgId}, callback = self.parse_page)
         except Exception as ex:
             self.logger.warn('Parse Exception: %s %s' % (stkcd, str(page)))
     

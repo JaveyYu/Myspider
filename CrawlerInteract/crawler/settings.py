@@ -34,7 +34,7 @@ USER_AGENTS = ["Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrow
 # Downloader middleware
 DOWNLOADER_MIDDLEWARES = {
     'crawler.middleware.RandomRequestHeaders': 100,
-    'crawler.middleware.CustomHttpTunnelMiddleware': 200,
+    #'crawler.middleware.CustomHttpTunnelMiddleware': 200,
 }
 
 # Download delay
@@ -107,7 +107,7 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 #SCHEDULER_SERIALIZER = "scrapy_redis.picklecompat"
 
 # Don't cleanup redis queues, allows to pause/resume crawls.
-SCHEDULER_PERSIST = True
+SCHEDULER_PERSIST = False
 
 # Schedule requests using a priority queue. (default)
 #SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.PriorityQueue'
@@ -138,7 +138,7 @@ REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 
 #Whether to flush redis queue on start
-SCHEDULER_FLUSH_ON_START = False
+SCHEDULER_FLUSH_ON_START = True
 
 # Specify the full Redis URL for connecting (optional).
 # If set, this takes precedence over the REDIS_HOST and REDIS_PORT settings.
