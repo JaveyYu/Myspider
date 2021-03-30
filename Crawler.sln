@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Test", "Test\Test.pyproj", "{89A1917D-D587-4228-A17B-4B1031985DF2}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerCoin", "CrawlerCoin\CrawlerCoin.pyproj", "{2AC56CE6-19FB-4A2F-B044-F64E143CB6EB}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerInteract", "CrawlerInteract\CrawlerInteract.pyproj", "{C068AAA1-15A7-4F8B-87FF-6A821E8B4647}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlerConference", "CrawlerConference\CrawlerConference.pyproj", "{CE246240-9389-4E3D-A41D-6812945E6C11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,8 @@ Global
 		{2AC56CE6-19FB-4A2F-B044-F64E143CB6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C068AAA1-15A7-4F8B-87FF-6A821E8B4647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C068AAA1-15A7-4F8B-87FF-6A821E8B4647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE246240-9389-4E3D-A41D-6812945E6C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE246240-9389-4E3D-A41D-6812945E6C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

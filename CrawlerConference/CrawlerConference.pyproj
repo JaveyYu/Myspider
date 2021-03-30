@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>c068aaa1-15a7-4f8b-87ff-6a821e8b4647</ProjectGuid>
+    <ProjectGuid>ce246240-9389-4e3d-a41d-6812945e6c11</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>run.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>CrawlerInteract</Name>
-    <RootNamespace>CrawlerInteract</RootNamespace>
+    <Name>CrawlerConference</Name>
+    <RootNamespace>CrawlerConference</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,28 +21,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CrawlerorgIDs.py" />
+    <Compile Include="crawler\spiders\scio_gov.py" />
+    <Compile Include="run.py" />
     <Compile Include="crawler\items.py" />
+    <Compile Include="crawler\middleware.py" />
     <Compile Include="crawler\pipelines.py" />
     <Compile Include="crawler\settings.py" />
-    <Compile Include="crawler\spiders\ehudong_q.py" />
-    <Compile Include="crawler\spiders\ehudong_qa.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="crawler\spiders\hudongyi.py" />
-    <Compile Include="crawler\spiders\test.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="crawler\spiders\test_qa.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="crawler\spiders\util.py" />
     <Compile Include="crawler\spiders\__init__.py" />
     <Compile Include="crawler\__init__.py" />
-    <Compile Include="crawler\middleware.py" />
-    <Compile Include="run.py">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="crawler\" />
