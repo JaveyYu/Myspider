@@ -46,20 +46,20 @@ USER_AGENTS = [
 #DOWNLOADER_STATS = True
 #COOKIES_ENABLED = True
 #COOKIES_DEBUG = False
-#COOKIES = [{
+COOKIES = [{
 #    #登陆cookie
 #    'SESSION_HASH' : '57465b73b799430aa123ac21da9e1f65479dcf02',
-#    'pclog':'%7B%22136411950%22%3A%221536235131379%'
-#    }]
+    'xq_a_token':'1114179aa7a5b2cab9c666db728bd0fde79e06d9'
+    }]
 
 
 DOWNLOADER_MIDDLEWARES = {
     'crawler.middleware.RandomRequestHeaders': 100,
-    'crawler.middleware.CustomHttpTunnelMiddleware': 200,
-    'crawler.middleware.SeleniumMiddleware' : 543,
+    #'crawler.middleware.CustomHttpTunnelMiddleware': 200,
+    #'crawler.middleware.SeleniumMiddleware' : 543,
 }
 SELENIUM_TIMEOUT = 5
 CHROME_SERVICE_ARGS = []
 
-USERNAME = '1947324800'
-PASSWORD = 'brhdgs72568'
+#USERNAME = '1947324800'
+#PASSWORD = 'brhdgs72568'

@@ -17,13 +17,15 @@ class TestspiderSpider(Spider):
     name = 'CrawlerTest'
 
     def start_requests(self):
-        start_url = 'https://xueqiu.com'
-        yield Request(start_url, callback = self.parse)
+        start_url = 'https://im0.xueqiu.com/im-comet/v2/notifications/4869304/ping.json?'
+         #https://im0.xueqiu.com/im-comet/v2/notifications/4869304/ping.json?user_id=2270920225
+        data = {'user_id' : '2270920225'}
+        yield FormRequest(start_url, formdata = data, callback = self.parse)
 
     def parse(self, response):
-        next = response.xpath('//li[@class="_b8vexar"]//a/@href').extract()
+        body = response.body
          
-        print()
+        print(body)
 
 
 
